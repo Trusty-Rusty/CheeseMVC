@@ -31,7 +31,8 @@ namespace CheeseMVC.Controllers
                 Cheese newCheese = new Cheese
                 {
                     Name = addCheeseViewModel.Name,
-                    Description = addCheeseViewModel.Description
+                    Description = addCheeseViewModel.Description,
+                    Type = addCheeseViewModel.Type
                 };
 
                 CheeseData.Add(newCheese);
@@ -56,6 +57,22 @@ namespace CheeseMVC.Controllers
             {
                 CheeseData.Remove(cheeseId);
             }
+
+            return Redirect("/");
+        }
+
+        public IActionResult Edit(int id)
+        {
+            ViewBag.cheese = CheeseData.GetById(id);
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, string name, string description)
+        {
+            Cheese cheese = CheeseData.GetById(id);
+            cheese.Name = name;
+            cheese.Description = description;
 
             return Redirect("/");
         }
